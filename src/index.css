@@ -20,11 +20,21 @@
 
   --color-red-50: #fef2f2;
   --color-red-100: #fee2e2;
+  --color-red-200: #fecaca;
   --color-red-500: #ef4444;
   --color-red-600: #dc2626;
 
   --color-black: #000000;
   --color-white: #ffffff;
+  --color-transparent: transparent;
+}
+
+.print-area {
+  color: #000000 !important;
+}
+
+.print-area * {
+  border-color: #000000 !important;
 }
 
 @layer base {

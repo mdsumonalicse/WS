@@ -147,7 +147,28 @@ export default function App() {
           scale: 3,
           useCORS: true,
           logging: false,
-          letterRendering: true
+          letterRendering: true,
+          onclone: (clonedDocument: Document) => {
+            // Fix: html2canvas fails with "oklab" or "oklch" colors from Tailwind v4
+            // We force standard colors on the cloned elements for the capture
+            const style = clonedDocument.createElement('style');
+            style.innerHTML = `
+              :root {
+                --color-zinc-50: #fafafa !important;
+                --color-zinc-100: #f4f4f5 !important;
+                --color-zinc-200: #e4e4e7 !important;
+                --color-black: #000000 !important;
+                --color-white: #ffffff !important;
+              }
+              body, * {
+                color: black !important;
+                border-color: black !important;
+              }
+              .bg-white { background-color: white !important; }
+              .bg-zinc-100 { background-color: #f4f4f5 !important; }
+            `;
+            clonedDocument.head.appendChild(style);
+          }
         },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
         pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }

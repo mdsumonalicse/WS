@@ -56,7 +56,7 @@ export const ProductionCard: React.FC<ProductionCardProps> = ({ data, styleConfi
         width: '65mm'
       }}
     >
-      <div className="text-center w-full font-bold uppercase tracking-[0.2em] mb-1.5 border-b border-black/10 pb-0.5" style={{ fontSize: `${Math.max(6, (styleConfig?.fontSize ?? 10) - 4)}px` }}>
+      <div className="text-center w-full font-bold uppercase tracking-[0.2em] mb-1.5 border-b border-[rgba(0,0,0,0.1)] pb-0.5" style={{ fontSize: `${Math.max(6, (styleConfig?.fontSize ?? 10) - 4)}px` }}>
         Elastic Bundle Card
       </div>
       <div 
