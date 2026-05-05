@@ -53,7 +53,7 @@ export const ProductionCard: React.FC<ProductionCardProps> = ({ data, styleConfi
       className={`inline-block border-2 border-black p-2 bg-white font-sans text-black leading-tight ${className}`} 
       id="production-card" 
       style={{ 
-        width: '67mm'
+        width: '69mm'
       }}
     >
       <div 
