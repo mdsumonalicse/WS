@@ -89,17 +89,17 @@
   .grid-container {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    column-gap: 1mm !important;
-    row-gap: 3mm !important;
+    column-gap: 2mm !important;
+    row-gap: 4mm !important;
     margin: 0 auto !important;
-    width: 206mm !important;
+    width: 199mm !important;
   }
 
   #production-card {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     display: block !important;
-    width: 68mm !important;
+    width: 65mm !important;
     border: 2px solid black !important;
     margin: 0 auto !important;
     box-sizing: border-box !important;
