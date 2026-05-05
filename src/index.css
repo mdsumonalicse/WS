@@ -105,8 +105,8 @@
   }
 
   .card-header {
-    border-bottom: 1px solid rgba(0,0,0,0.06) !important;
-    color: rgba(0,0,0,0.8) !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    color: #4b5563 !important;
   }
 
   .grid-container {

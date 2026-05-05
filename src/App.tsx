@@ -201,16 +201,19 @@ export default function App() {
                 background: #ffffff !important;
                 font-family: ui-sans-serif, system-ui, -apple-system, sans-serif !important;
                 page-break-inside: avoid !important;
-                line-height: 1.2 !important;
-                padding-top: 2mm !important; /* Increased to prevent top text cutting */
+                line-height: 1.1 !important;
+                padding: 3mm 2mm 2mm 2mm !important; /* Top padding to prevent cutting */
+                display: flex !important;
+                flex-direction: column !important;
+                overflow: hidden !important; /* Prevent content from leaking out of the card border */
               }
               
               .card-header {
-                border-bottom: 1px solid rgba(0,0,0,0.06) !important; /* Lighter "zapca" underline */
-                margin-bottom: 2mm !important;
-                padding-bottom: 0.5mm !important;
+                border-bottom: 1px solid #e5e7eb !important; /* Fixed "zapca" (faded) color */
+                margin-bottom: 1.5mm !important;
+                padding-bottom: 1mm !important;
                 display: block !important;
-                color: rgba(0,0,0,0.8) !important; /* Slightly faded text for the secondary title */
+                color: #4b5563 !important; /* Slightly faded text */
               }
               
               .font-bold { font-weight: 700 !important; }
