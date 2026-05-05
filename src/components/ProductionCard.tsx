@@ -91,7 +91,7 @@ export const ProductionCard: React.FC<ProductionCardProps> = ({ data, styleConfi
         <div className="font-bold leading-none" style={{ fontSize: `${bigValueSize}px` }}>{data.bNo}</div>
 
         {/* Row 4 */}
-        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>G. Color</div>
+        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>S. Color</div>
         <div className="font-bold" style={{ fontSize: `${labelSize}px` }}>:</div>
         <div className="uppercase font-bold self-end pb-0.5">
           <AutoShrink text={data.gColour} fontSize={valueSize} />
@@ -101,7 +101,7 @@ export const ProductionCard: React.FC<ProductionCardProps> = ({ data, styleConfi
         <div className="font-bold whitespace-nowrap leading-none" style={{ fontSize: `${valueSize}px` }}>{data.bSl}</div>
 
         {/* Row 5 */}
-        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>I. Color</div>
+        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>Color</div>
         <div className="font-bold" style={{ fontSize: `${labelSize}px` }}>:</div>
         <div className="uppercase font-bold col-span-4 self-end pb-0.5">
           <AutoShrink text={data.iColour} fontSize={valueSize} />
@@ -109,7 +109,7 @@ export const ProductionCard: React.FC<ProductionCardProps> = ({ data, styleConfi
       </div>
 
       {/* Subtle branding text at the bottom right */}
-      <div className="absolute bottom-2 right-1 text-[5px] opacity-25 text-black font-bold uppercase leading-[1.1] pointer-events-none text-right">
+      <div className="absolute bottom-[2px] right-1 text-[5px] opacity-25 text-black font-bold uppercase leading-[1.1] pointer-events-none text-right">
         Elastic <br /> Bundle Card
       </div>
     </div>
