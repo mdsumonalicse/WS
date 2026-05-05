@@ -52,7 +52,7 @@
 @media print {
   @page {
     size: A4 portrait;
-    margin: 0.25in;
+    margin: 5mm;
   }
 
   .no-print {
@@ -88,20 +88,20 @@
 
   .grid-container {
     display: grid !important;
-    grid-template-columns: 1fr 1fr 1fr !important;
+    grid-template-columns: repeat(3, 1fr) !important;
     column-gap: 1mm !important;
-    row-gap: 4mm !important;
+    row-gap: 3mm !important;
     margin: 0 auto !important;
-    width: auto !important;
+    width: 206mm !important;
   }
 
   #production-card {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     display: block !important;
-    width: 69mm !important;
+    width: 68mm !important;
     border: 2px solid black !important;
-    margin: 0.5mm auto !important;
+    margin: 0 auto !important;
     box-sizing: border-box !important;
   }
 }

@@ -429,7 +429,7 @@ export default function App() {
 
       {/* Main Content: Preview */}
       <div className="flex-1 bg-zinc-100 p-8 lg:h-screen lg:overflow-y-auto preview-scroll relative lg:ml-[380px]">
-        <div className="max-w-[1000px] mx-auto bg-white p-12 shadow-2xl border border-zinc-200 min-h-full print-area">
+        <div className="max-w-[1000px] mx-auto bg-white p-6 shadow-2xl border border-zinc-200 min-h-full print-area">
           <div className="flex items-center justify-between mb-8 pb-4 border-b border-zinc-100 no-print">
             <div className="flex items-center gap-2 text-zinc-400">
               <span className="text-[10px] font-bold uppercase tracking-widest italic">Live Preview</span>
