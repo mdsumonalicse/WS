@@ -43,6 +43,11 @@
   }
 }
 
+.print-area {
+  -webkit-font-smoothing: subpixel-antialiased !important;
+  -moz-osx-font-smoothing: auto !important;
+}
+
 @layer utilities {
   .custom-scrollbar::-webkit-scrollbar {
     width: 4px;
@@ -87,13 +92,21 @@
   }
 
   .page-container {
-    page-break-after: always !important;
-    break-after: page !important;
     padding: 0 !important;
     box-sizing: border-box !important;
     width: 210mm !important;
     height: 297mm !important;
     margin: 0 !important;
+  }
+
+  .page-container:not(:last-child) {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
+  .card-header {
+    border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+    color: rgba(0,0,0,0.8) !important;
   }
 
   .grid-container {

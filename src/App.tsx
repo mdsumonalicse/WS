@@ -142,15 +142,14 @@ export default function App() {
       const opt = {
         margin: 0,
         filename: `Production-Labels-${specData.buyer}-${Date.now()}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
+        image: { type: 'jpeg', quality: 1.0 },
         html2canvas: { 
           scale: 3,
           useCORS: true,
           logging: false,
-          letterRendering: true,
+          letterRendering: false,
+          windowWidth: 1200,
           onclone: (clonedDocument: Document) => {
-            // Fix: html2canvas fails with "oklab" or "oklch" colors from Tailwind v4
-            // We force standard colors on the cloned elements for the capture
             const style = clonedDocument.createElement('style');
             style.innerHTML = `
               :root {
@@ -160,12 +159,74 @@ export default function App() {
                 --color-black: #000000 !important;
                 --color-white: #ffffff !important;
               }
-              body, * {
-                color: black !important;
-                border-color: black !important;
+              
+              .print-area {
+                background: white !important;
+                padding: 0 !important;
+                width: 210mm !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                display: block !important;
               }
-              .bg-white { background-color: white !important; }
-              .bg-zinc-100 { background-color: #f4f4f5 !important; }
+              
+              .page-container {
+                width: 210mm !important;
+                height: 297mm !important;
+                padding: 5mm !important;
+                box-sizing: border-box !important;
+                background: white !important;
+                position: relative !important;
+              }
+              
+              .page-container:not(:last-child) {
+                page-break-after: always !important;
+              }
+              
+              .grid-container {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                width: 200mm !important;
+                column-gap: 2mm !important;
+                row-gap: 4mm !important;
+                margin: 0 auto !important;
+              }
+              
+              [id="production-card"] {
+                width: 65mm !important;
+                min-width: 65mm !important;
+                border: 2px solid #000000 !important;
+                box-sizing: border-box !important;
+                color: #000000 !important;
+                background: #ffffff !important;
+                font-family: ui-sans-serif, system-ui, -apple-system, sans-serif !important;
+                page-break-inside: avoid !important;
+                line-height: 1.2 !important;
+                padding-top: 2mm !important; /* Increased to prevent top text cutting */
+              }
+              
+              .card-header {
+                border-bottom: 1px solid rgba(0,0,0,0.06) !important; /* Lighter "zapca" underline */
+                margin-bottom: 2mm !important;
+                padding-bottom: 0.5mm !important;
+                display: block !important;
+                color: rgba(0,0,0,0.8) !important; /* Slightly faded text for the secondary title */
+              }
+              
+              .font-bold { font-weight: 700 !important; }
+              .uppercase { text-transform: uppercase !important; }
+              
+              /* Force all text to be pure black and avoid any squishing */
+              * {
+                color: #000000 !important;
+                -webkit-font-smoothing: antialiased !important;
+                overflow: visible !important;
+              }
+
+              /* Selective border color to avoid making light lines too dark */
+              [id="production-card"] {
+                border-color: #000000 !important;
+              }
             `;
             clonedDocument.head.appendChild(style);
           }
@@ -216,14 +277,12 @@ export default function App() {
     }
 
     return pages.map((page, pageIdx) => (
-      <div key={pageIdx} className="page-container mb-24 last:mb-0 print:mb-0 print:break-after-page">
+      <div key={pageIdx} className="page-container mb-24 last:mb-0 print:mb-0">
         <div className="grid-container grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-4 print:gap-x-1 print:gap-y-4">
           {page.map((labelData, labelIdx) => (
             <ProductionCard key={labelIdx} data={labelData} styleConfig={styleConfig} />
           ))}
         </div>
-        {/* html2pdf specific page break marker */}
-        {pageIdx < pages.length - 1 && <div className="html2pdf__page-break" style={{ height: '0', pageBreakAfter: 'always' }} />}
       </div>
     ));
   };
