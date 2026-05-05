@@ -56,45 +56,57 @@ export const ProductionCard: React.FC<ProductionCardProps> = ({ data, styleConfi
         width: '69mm'
       }}
     >
+      <div className="text-center w-full font-bold uppercase tracking-[0.2em] mb-1.5 border-b border-black/10 pb-0.5" style={{ fontSize: `${Math.max(6, (styleConfig?.fontSize ?? 10) - 4)}px` }}>
+        Elastic Bundle Card
+      </div>
       <div 
-        className="grid grid-cols-[max-content_1fr_max-content_auto] gap-x-1 gap-y-1 items-center"
+        className="grid grid-cols-[max-content_min-content_1fr_max-content_min-content_auto] gap-x-1 gap-y-1 items-center"
         style={{ transform: `translateX(${xOffset}px)` }}
       >
         {/* Row 1 */}
-        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>Buyer:</div>
+        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>Buyer</div>
+        <div className="font-bold" style={{ fontSize: `${labelSize}px` }}>:</div>
         <div className="uppercase tracking-tight font-bold self-end pb-0.5">
           <AutoShrink text={data.buyer} fontSize={valueSize} />
         </div>
-        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>Size:</div>
+        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>Size</div>
+        <div className="font-bold" style={{ fontSize: `${labelSize}px` }}>:</div>
         <div className="font-bold leading-none" style={{ fontSize: `${bigValueSize}px` }}>{data.size}</div>
 
         {/* Row 2 */}
-        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>Ref. No:</div>
+        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>Ref. No</div>
+        <div className="font-bold" style={{ fontSize: `${labelSize}px` }}>:</div>
         <div className="uppercase tracking-tight font-bold self-end pb-0.5">
           <AutoShrink text={data.refNo} fontSize={valueSize} />
         </div>
-        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>B Qty:</div>
+        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>B Qty</div>
+        <div className="font-bold" style={{ fontSize: `${labelSize}px` }}>:</div>
         <div className="font-bold leading-none" style={{ fontSize: `${bigValueSize}px` }}>{data.bQty}</div>
 
         {/* Row 3 */}
-        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>Style:</div>
+        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>Style</div>
+        <div className="font-bold" style={{ fontSize: `${labelSize}px` }}>:</div>
         <div className="uppercase tracking-tight font-bold self-end pb-0.5">
           <AutoShrink text={data.style} fontSize={valueSize} />
         </div>
-        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>B No:</div>
+        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>B No</div>
+        <div className="font-bold" style={{ fontSize: `${labelSize}px` }}>:</div>
         <div className="font-bold leading-none" style={{ fontSize: `${bigValueSize}px` }}>{data.bNo}</div>
 
         {/* Row 4 */}
-        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>G. Color:</div>
+        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>G. Color</div>
+        <div className="font-bold" style={{ fontSize: `${labelSize}px` }}>:</div>
         <div className="uppercase font-bold self-end pb-0.5">
           <AutoShrink text={data.gColour} fontSize={valueSize} />
         </div>
-        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>B SL:</div>
+        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>B SL</div>
+        <div className="font-bold" style={{ fontSize: `${labelSize}px` }}>:</div>
         <div className="font-bold whitespace-nowrap leading-none" style={{ fontSize: `${valueSize}px` }}>{data.bSl}</div>
 
         {/* Row 5 */}
-        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>I. Color:</div>
-        <div className="uppercase font-bold col-span-3 self-end pb-0.5">
+        <div className="font-bold whitespace-nowrap" style={{ fontSize: `${labelSize}px` }}>I. Color</div>
+        <div className="font-bold" style={{ fontSize: `${labelSize}px` }}>:</div>
+        <div className="uppercase font-bold col-span-4 self-end pb-0.5">
           <AutoShrink text={data.iColour} fontSize={valueSize} />
         </div>
       </div>
