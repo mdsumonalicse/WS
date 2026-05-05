@@ -50,7 +50,7 @@ export const ProductionCard: React.FC<ProductionCardProps> = ({ data, styleConfi
 
   return (
     <div 
-      className={`relative inline-block border-2 border-black p-2 bg-white font-sans text-black leading-tight ${className}`} 
+      className={`relative inline-block border-2 border-black pt-2 px-2 pb-4 bg-white font-sans text-black leading-tight ${className}`} 
       id="production-card" 
       style={{ 
         width: '65mm'
@@ -109,7 +109,7 @@ export const ProductionCard: React.FC<ProductionCardProps> = ({ data, styleConfi
       </div>
 
       {/* Subtle branding text at the bottom right */}
-      <div className="absolute bottom-2 right-1 text-[5px] opacity-25 text-black font-bold uppercase leading-[1.1] pointer-events-none text-right">
+      <div className="absolute bottom-1 right-1 text-[5px] opacity-25 text-black font-bold uppercase leading-[1.1] pointer-events-none text-right">
         Elastic <br /> Bundle Card
       </div>
     </div>
