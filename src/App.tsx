@@ -142,12 +142,78 @@ export default function App() {
       const opt = {
         margin: 0,
         filename: `Production-Labels-${specData.buyer}-${Date.now()}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
+        image: { type: 'jpeg', quality: 1.0 },
         html2canvas: { 
           scale: 3,
           useCORS: true,
           logging: false,
-          letterRendering: true
+          letterRendering: false,
+          windowWidth: 1200,
+          onclone: (clonedDocument: Document) => {
+            const style = clonedDocument.createElement('style');
+            style.innerHTML = `
+              :root {
+                --color-zinc-50: #fafafa !important;
+                --color-zinc-100: #f4f4f5 !important;
+                --color-zinc-200: #e4e4e7 !important;
+                --color-black: #000000 !important;
+                --color-white: #ffffff !important;
+              }
+              
+              .print-area {
+                background: white !important;
+                padding: 0 !important;
+                width: 210mm !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                display: block !important;
+              }
+              
+              .page-container {
+                width: 210mm !important;
+                height: 297mm !important;
+                padding: 5mm !important;
+                box-sizing: border-box !important;
+                background: white !important;
+                page-break-after: always !important;
+                position: relative !important;
+              }
+              
+              .grid-container {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                width: 200mm !important;
+                column-gap: 2mm !important;
+                row-gap: 4mm !important;
+                margin: 0 auto !important;
+              }
+              
+              [id="production-card"] {
+                width: 65mm !important;
+                min-width: 65mm !important;
+                border: 2px solid #000000 !important;
+                box-sizing: border-box !important;
+                color: #000000 !important;
+                background: #ffffff !important;
+                font-family: ui-sans-serif, system-ui, -apple-system, sans-serif !important;
+                page-break-inside: avoid !important;
+                line-height: 1.2 !important;
+              }
+              
+              .font-bold { font-weight: 700 !important; }
+              .uppercase { text-transform: uppercase !important; }
+              
+              /* Force all text to be pure black and avoid any squishing */
+              * {
+                color: #000000 !important;
+                border-color: #000000 !important;
+                -webkit-font-smoothing: antialiased !important;
+                overflow: visible !important;
+              }
+            `;
+            clonedDocument.head.appendChild(style);
+          }
         },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
         pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }

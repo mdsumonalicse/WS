@@ -50,15 +50,12 @@ export const ProductionCard: React.FC<ProductionCardProps> = ({ data, styleConfi
 
   return (
     <div 
-      className={`inline-block border-2 border-black p-2 bg-white font-sans text-black leading-tight ${className}`} 
+      className={`relative inline-block border-2 border-black p-2 bg-white font-sans text-black leading-tight ${className}`} 
       id="production-card" 
       style={{ 
         width: '65mm'
       }}
     >
-      <div className="text-center w-full font-bold uppercase tracking-[0.2em] mb-1.5 border-b border-black/10 pb-0.5" style={{ fontSize: `${Math.max(6, (styleConfig?.fontSize ?? 10) - 4)}px` }}>
-        Elastic Bundle Card
-      </div>
       <div 
         className="grid grid-cols-[max-content_min-content_1fr_max-content_min-content_auto] gap-x-1 gap-y-1 items-center"
         style={{ transform: `translateX(${xOffset}px)` }}
@@ -109,6 +106,11 @@ export const ProductionCard: React.FC<ProductionCardProps> = ({ data, styleConfi
         <div className="uppercase font-bold col-span-4 self-end pb-0.5">
           <AutoShrink text={data.iColour} fontSize={valueSize} />
         </div>
+      </div>
+
+      {/* Subtle branding text at the bottom right */}
+      <div className="absolute bottom-2 right-1 text-[5px] opacity-25 text-black font-bold uppercase leading-[1.1] pointer-events-none text-right">
+        Elastic <br /> Bundle Card
       </div>
     </div>
   );
