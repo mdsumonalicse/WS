@@ -131,7 +131,7 @@ export default function App() {
         filename: `Production-Labels-${specData.buyer}-${Date.now()}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { 
-          scale: 2,
+          scale: 3,
           useCORS: true,
           logging: false,
           letterRendering: true
@@ -156,8 +156,8 @@ export default function App() {
 
   const renderPages = () => {
     const totalToGenerate = labelCount;
-    // 3 cards per row, 7 rows per page = 21 cards
-    const itemsPerSheet = 21; 
+    // 12 labels per sheet (2 cols x 6 rows) fits well on A4
+    const itemsPerSheet = 12; 
     
     const pages = [];
     
@@ -167,6 +167,7 @@ export default function App() {
       
       for (let j = i; j < end; j++) {
         const currentBNo = startBNo + j;
+        // Correct calculation for Serial Range (B SL)
         const currentBundleQty = parseInt(specData.bQty) || 0;
         const startSL = 1 + (j * currentBundleQty);
         const endSL = (j + 1) * currentBundleQty;
@@ -181,8 +182,8 @@ export default function App() {
     }
 
     return pages.map((page, pageIdx) => (
-      <div key={pageIdx} className="page-container mb-12 last:mb-0 print:mb-0 print:m-0 print:break-after-page overflow-hidden bg-white">
-        <div className="grid grid-cols-3 gap-2 print:gap-[1.5mm] print:px-0 mx-auto w-fit">
+      <div key={pageIdx} className="page-container mb-24 last:mb-0 print:mb-0 print:break-after-page">
+        <div className="grid-container grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 print:gap-x-4 print:gap-y-6">
           {page.map((labelData, labelIdx) => (
             <ProductionCard key={labelIdx} data={labelData} />
           ))}
@@ -196,10 +197,12 @@ export default function App() {
   return (
     <div className="flex flex-col lg:flex-row min-h-screen bg-zinc-100">
       {/* Sidebar: Inputs */}
-      <div className="w-full lg:w-[380px] bg-white border-r border-zinc-200 p-5 lg:h-screen lg:fixed lg:top-0 lg:left-0 no-print flex flex-col shadow-xl z-20 font-sans">
+      <div className="w-full lg:w-[380px] bg-white border-r border-zinc-200 p-5 lg:h-screen lg:fixed lg:top-0 lg:left-0 no-print flex flex-col shadow-xl z-20">
         <div className="flex items-center gap-2 mb-4 shrink-0">
-          <div className="bg-black p-1.5 rounded text-white font-black text-xl italic tracking-tighter">G</div>
-          <h1 className="font-black text-lg tracking-tight uppercase">Spec <span className="text-zinc-400">Pro</span></h1>
+          <div className="bg-black p-1.5 rounded text-white">
+            <Settings2 size={20} />
+          </div>
+          <h1 className="font-bold text-lg tracking-tight uppercase">Garment Spec Pro</h1>
         </div>
 
         {/* Action Buttons at Top */}
@@ -228,7 +231,6 @@ export default function App() {
         </div>
 
         <div className="flex-1 overflow-y-auto space-y-5 pr-1 custom-scrollbar">
-          {/* ... inputs ... */}
           <div className="space-y-1.5 relative">
             <div className="flex items-center justify-between">
               <label className="text-[10px] font-bold uppercase text-zinc-400 tracking-wider">Select Buyer</label>
@@ -296,7 +298,7 @@ export default function App() {
                 name="size"
                 value={specData.size}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-zinc-200 rounded focus:border-black focus:ring-0 transition-all text-sm font-medium font-bold" 
+                className="w-full px-3 py-2 border border-zinc-200 rounded focus:border-black focus:ring-0 transition-all text-sm font-medium" 
               />
             </div>
           </div>
@@ -339,7 +341,7 @@ export default function App() {
                 type="number"
                 value={specData.bQty}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-zinc-200 rounded focus:border-black focus:ring-0 transition-all text-sm font-medium font-mono font-bold" 
+                className="w-full px-3 py-2 border border-zinc-200 rounded focus:border-black focus:ring-0 transition-all text-sm font-medium font-mono" 
               />
             </div>
             <div className="space-y-1.5">
@@ -349,7 +351,7 @@ export default function App() {
                 type="number"
                 value={specData.bNo}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-zinc-200 rounded focus:border-black focus:ring-0 transition-all text-sm font-medium font-mono font-bold" 
+                className="w-full px-3 py-2 border border-zinc-200 rounded focus:border-black focus:ring-0 transition-all text-sm font-medium font-mono" 
               />
             </div>
           </div>
@@ -357,14 +359,14 @@ export default function App() {
           <div className="space-y-1.5 pt-4">
             <div className="grid grid-cols-1 gap-4">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase text-zinc-400 tracking-wider text-black">Total Bundle Cards</label>
+                <label className="text-[10px] font-bold uppercase text-zinc-400 tracking-wider">Items on Sheet</label>
                 <input 
                   type="number"
                   min="1"
                   max="200"
                   value={labelCount}
                   onChange={(e) => setLabelCount(Math.min(200, Math.max(1, parseInt(e.target.value) || 1)))}
-                  className="w-full px-3 py-2 border-2 border-black rounded focus:ring-0 transition-all text-lg font-black font-mono" 
+                  className="w-full px-3 py-2 border border-zinc-200 rounded focus:border-black focus:ring-0 transition-all text-sm font-medium font-mono" 
                 />
               </div>
             </div>
@@ -373,21 +375,20 @@ export default function App() {
       </div>
 
       {/* Main Content: Preview */}
-      <div className="flex-1 bg-zinc-100 p-2 lg:h-screen lg:overflow-y-auto preview-scroll relative lg:ml-[380px]">
-        <div className="max-w-[800px] mx-auto bg-white p-2 shadow-2xl border border-zinc-200 min-h-full print-area print:p-0 print:shadow-none print:border-none">
-          <div className="flex items-center justify-between mb-4 pb-2 border-b border-zinc-100 no-print">
+      <div className="flex-1 bg-zinc-100 p-8 lg:h-screen lg:overflow-y-auto preview-scroll relative lg:ml-[380px]">
+        <div className="max-w-[1000px] mx-auto bg-white p-12 shadow-2xl border border-zinc-200 min-h-full print-area">
+          <div className="flex items-center justify-between mb-8 pb-4 border-b border-zinc-100 no-print">
             <div className="flex items-center gap-2 text-zinc-400">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-widest">A4 Portrait Preview</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest italic">Live Preview</span>
             </div>
-            <div className="text-[10px] text-zinc-400 font-medium bg-zinc-50 px-2 py-1 rounded">
-              3x7 GRID • {labelCount} CARDS
+            <div className="text-[10px] text-zinc-400 font-medium">
+              A4 PORTRAIT • {labelCount} LABELS
             </div>
           </div>
 
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             key={JSON.stringify(specData) + labelCount}
           >
             {renderPages()}
