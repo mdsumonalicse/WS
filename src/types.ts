@@ -10,6 +10,16 @@ export interface ProductionData {
   iColour: string;
 }
 
+export interface LabelStyle {
+  fontSize: number;
+  contentXOffset: number;
+}
+
+export const defaultLabelStyle: LabelStyle = {
+  fontSize: 11,
+  contentXOffset: 0,
+};
+
 export const defaultProductionData: ProductionData = {
   buyer: "CALLIOPE",
   size: "S",

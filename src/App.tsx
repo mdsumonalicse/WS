@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Printer, Settings2, FileText, ChevronDown, Plus, X } from 'lucide-react';
 import { ProductionCard } from './components/ProductionCard';
-import { ProductionData } from './types';
+import { ProductionData, LabelStyle, defaultLabelStyle } from './types';
 
 const INITIAL_BUYERS = [
   'Calliope', 'Kesko', 'O/Marines', 'US Polo', 'George', 'Gildan', 'Zizzi', 
@@ -29,6 +29,15 @@ const DEFAULT_DATA: ProductionData = {
 };
 
 export default function App() {
+  const [styleConfig, setStyleConfig] = useState<LabelStyle>(() => {
+    try {
+      const saved = localStorage.getItem('garment_label_style');
+      return saved ? JSON.parse(saved) : defaultLabelStyle;
+    } catch (e) {
+      return defaultLabelStyle;
+    }
+  });
+
   const [buyers, setBuyers] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem('garment_buyers');
@@ -58,6 +67,10 @@ export default function App() {
       return 12;
     }
   });
+
+  useEffect(() => {
+    localStorage.setItem('garment_label_style', JSON.stringify(styleConfig));
+  }, [styleConfig]);
 
   useEffect(() => {
     localStorage.setItem('garment_spec_data', JSON.stringify(specData));
@@ -156,8 +169,8 @@ export default function App() {
 
   const renderPages = () => {
     const totalToGenerate = labelCount;
-    // 12 labels per sheet (2 cols x 6 rows) fits well on A4
-    const itemsPerSheet = 12; 
+    // 21 labels per sheet (3 cols x 7 rows) fits well on A4
+    const itemsPerSheet = 21; 
     
     const pages = [];
     
@@ -183,9 +196,9 @@ export default function App() {
 
     return pages.map((page, pageIdx) => (
       <div key={pageIdx} className="page-container mb-24 last:mb-0 print:mb-0 print:break-after-page">
-        <div className="grid-container grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 print:gap-x-4 print:gap-y-6">
+        <div className="grid-container grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-4 print:gap-x-1 print:gap-y-4">
           {page.map((labelData, labelIdx) => (
-            <ProductionCard key={labelIdx} data={labelData} />
+            <ProductionCard key={labelIdx} data={labelData} styleConfig={styleConfig} />
           ))}
         </div>
         {/* html2pdf specific page break marker */}
@@ -356,7 +369,47 @@ export default function App() {
             </div>
           </div>
 
-          <div className="space-y-1.5 pt-4">
+          <div className="space-y-1.5 pt-4 border-t border-zinc-100">
+            <label className="text-[10px] font-bold uppercase text-zinc-600 tracking-wider flex items-center gap-1.5">
+              <Settings2 size={12} />
+              Layout Adjustments
+            </label>
+            
+            <div className="space-y-4 pt-2">
+              <div className="space-y-1.5">
+                <div className="flex justify-between text-[10px] font-bold text-zinc-400 uppercase">
+                  <span>Font Size</span>
+                  <span>{styleConfig.fontSize}px</span>
+                </div>
+                <input 
+                  type="range"
+                  min="6"
+                  max="16"
+                  step="0.5"
+                  value={styleConfig.fontSize}
+                  onChange={(e) => setStyleConfig(prev => ({ ...prev, fontSize: parseFloat(e.target.value) }))}
+                  className="w-full accent-black h-1.5 bg-zinc-100 rounded-lg appearance-none cursor-pointer"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <div className="flex justify-between text-[10px] font-bold text-zinc-400 uppercase">
+                  <span>Move Left/Right</span>
+                  <span>{styleConfig.contentXOffset}px</span>
+                </div>
+                <input 
+                  type="range"
+                  min="-20"
+                  max="20"
+                  value={styleConfig.contentXOffset}
+                  onChange={(e) => setStyleConfig(prev => ({ ...prev, contentXOffset: parseInt(e.target.value) }))}
+                  className="w-full accent-black h-1.5 bg-zinc-100 rounded-lg appearance-none cursor-pointer"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-1.5 pt-4 border-t border-zinc-100">
             <div className="grid grid-cols-1 gap-4">
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold uppercase text-zinc-400 tracking-wider">Items on Sheet</label>
