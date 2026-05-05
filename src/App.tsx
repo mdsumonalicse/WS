@@ -142,97 +142,12 @@ export default function App() {
       const opt = {
         margin: 0,
         filename: `Production-Labels-${specData.buyer}-${Date.now()}.pdf`,
-        image: { type: 'jpeg', quality: 1.0 },
+        image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { 
           scale: 3,
           useCORS: true,
           logging: false,
-          letterRendering: false,
-          windowWidth: 1200,
-          onclone: (clonedDocument: Document) => {
-            const style = clonedDocument.createElement('style');
-            style.innerHTML = `
-              :root {
-                --color-zinc-50: #fafafa !important;
-                --color-zinc-100: #f4f4f5 !important;
-                --color-zinc-200: #e4e4e7 !important;
-                --color-black: #000000 !important;
-                --color-white: #ffffff !important;
-              }
-              
-              .print-area {
-                background: white !important;
-                padding: 0 !important;
-                width: 210mm !important;
-                margin: 0 !important;
-                box-shadow: none !important;
-                border: none !important;
-                display: block !important;
-              }
-              
-              .page-container {
-                width: 210mm !important;
-                height: 297mm !important;
-                padding: 5mm !important;
-                box-sizing: border-box !important;
-                background: white !important;
-                position: relative !important;
-              }
-              
-              .page-container:not(:last-child) {
-                page-break-after: always !important;
-              }
-              
-              .grid-container {
-                display: grid !important;
-                grid-template-columns: repeat(3, 1fr) !important;
-                width: 200mm !important;
-                column-gap: 2mm !important;
-                row-gap: 4mm !important;
-                margin: 0 auto !important;
-              }
-              
-              [id="production-card"] {
-                width: 65mm !important;
-                min-width: 65mm !important;
-                border: 2px solid #000000 !important;
-                box-sizing: border-box !important;
-                color: #000000 !important;
-                background: #ffffff !important;
-                font-family: ui-sans-serif, system-ui, -apple-system, sans-serif !important;
-                page-break-inside: avoid !important;
-                line-height: 1.1 !important;
-                padding: 3mm 2mm 2mm 2mm !important; /* Top padding to prevent cutting */
-                display: flex !important;
-                flex-direction: column !important;
-                overflow: hidden !important; /* Prevent content from leaking out of the card border */
-              }
-              
-              .card-header {
-                border-bottom: 1px solid #e5e7eb !important; /* Fixed "zapca" (faded) color */
-                margin-bottom: 1.5mm !important;
-                padding-bottom: 1mm !important;
-                display: block !important;
-                color: #4b5563 !important; /* Slightly faded text */
-              }
-              
-              .font-bold { font-weight: 700 !important; }
-              .uppercase { text-transform: uppercase !important; }
-              
-              /* Force all text to be pure black and avoid any squishing */
-              * {
-                color: #000000 !important;
-                -webkit-font-smoothing: antialiased !important;
-                overflow: visible !important;
-              }
-
-              /* Selective border color to avoid making light lines too dark */
-              [id="production-card"] {
-                border-color: #000000 !important;
-              }
-            `;
-            clonedDocument.head.appendChild(style);
-          }
+          letterRendering: true
         },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
         pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
@@ -280,12 +195,14 @@ export default function App() {
     }
 
     return pages.map((page, pageIdx) => (
-      <div key={pageIdx} className="page-container mb-24 last:mb-0 print:mb-0">
+      <div key={pageIdx} className="page-container mb-24 last:mb-0 print:mb-0 print:break-after-page">
         <div className="grid-container grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-4 print:gap-x-1 print:gap-y-4">
           {page.map((labelData, labelIdx) => (
             <ProductionCard key={labelIdx} data={labelData} styleConfig={styleConfig} />
           ))}
         </div>
+        {/* html2pdf specific page break marker */}
+        {pageIdx < pages.length - 1 && <div className="html2pdf__page-break" style={{ height: '0', pageBreakAfter: 'always' }} />}
       </div>
     ));
   };

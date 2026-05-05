@@ -20,32 +20,17 @@
 
   --color-red-50: #fef2f2;
   --color-red-100: #fee2e2;
-  --color-red-200: #fecaca;
   --color-red-500: #ef4444;
   --color-red-600: #dc2626;
 
   --color-black: #000000;
   --color-white: #ffffff;
-  --color-transparent: transparent;
-}
-
-.print-area {
-  color: #000000 !important;
-}
-
-.print-area * {
-  border-color: #000000 !important;
 }
 
 @layer base {
   body {
     @apply bg-zinc-50 text-black font-sans antialiased;
   }
-}
-
-.print-area {
-  -webkit-font-smoothing: subpixel-antialiased !important;
-  -moz-osx-font-smoothing: auto !important;
 }
 
 @layer utilities {
@@ -92,6 +77,8 @@
   }
 
   .page-container {
+    page-break-after: always !important;
+    break-after: page !important;
     padding: 0 !important;
     box-sizing: border-box !important;
     width: 210mm !important;
@@ -99,23 +86,13 @@
     margin: 0 !important;
   }
 
-  .page-container:not(:last-child) {
-    page-break-after: always !important;
-    break-after: page !important;
-  }
-
-  .card-header {
-    border-bottom: 1px solid #e5e7eb !important;
-    color: #4b5563 !important;
-  }
-
   .grid-container {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    column-gap: 2mm !important;
-    row-gap: 4mm !important;
+    column-gap: 1mm !important;
+    row-gap: 3mm !important;
     margin: 0 auto !important;
-    width: 199mm !important;
+    width: 200mm !important;
   }
 
   #production-card {
