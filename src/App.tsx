@@ -156,7 +156,7 @@ export default function App() {
 
   const renderPages = () => {
     const totalToGenerate = labelCount;
-    // 12 labels per sheet (2 cols x 6 rows) fits well on A4
+    // 3 cards per row, 7 rows per page = 21 cards
     const itemsPerSheet = 21; 
     
     const pages = [];
@@ -167,7 +167,6 @@ export default function App() {
       
       for (let j = i; j < end; j++) {
         const currentBNo = startBNo + j;
-        // Correct calculation for Serial Range (B SL)
         const currentBundleQty = parseInt(specData.bQty) || 0;
         const startSL = 1 + (j * currentBundleQty);
         const endSL = (j + 1) * currentBundleQty;
@@ -182,8 +181,8 @@ export default function App() {
     }
 
     return pages.map((page, pageIdx) => (
-      <div key={pageIdx} className="page-container mb-12 last:mb-0 print:mb-0 print:m-0 print:p-0 print:break-after-page overflow-hidden bg-white">
-        <div className="grid grid-cols-3 gap-2 print:gap-1 w-fit mx-auto">
+      <div key={pageIdx} className="page-container mb-12 last:mb-0 print:mb-0 print:m-0 print:break-after-page overflow-hidden bg-white">
+        <div className="grid grid-cols-3 gap-2 print:gap-[1.5mm] print:px-0 mx-auto w-fit">
           {page.map((labelData, labelIdx) => (
             <ProductionCard key={labelIdx} data={labelData} />
           ))}
