@@ -173,7 +173,7 @@ export default function App() {
               .page-container {
                 width: 210mm !important;
                 height: 297mm !important;
-                padding: 5mm !important;
+                padding: 2.5mm 5mm !important;
                 box-sizing: border-box !important;
                 background: white !important;
                 page-break-after: always !important;
@@ -183,17 +183,23 @@ export default function App() {
               .grid-container {
                 display: grid !important;
                 grid-template-columns: repeat(3, 1fr) !important;
+                grid-template-rows: repeat(7, 1fr) !important;
                 width: 200mm !important;
+                height: 292mm !important;
                 column-gap: 2mm !important;
-                row-gap: 4mm !important;
+                row-gap: 1.5mm !important;
                 margin: 0 auto !important;
               }
               
               [id="production-card"] {
                 width: 65mm !important;
-                min-width: 65mm !important;
+                height: 100% !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
                 border: 2px solid #000000 !important;
                 box-sizing: border-box !important;
+                padding: 2mm !important;
                 color: #000000 !important;
                 background: #ffffff !important;
                 font-family: ui-sans-serif, system-ui, -apple-system, sans-serif !important;
@@ -235,7 +241,6 @@ export default function App() {
 
   const renderPages = () => {
     const totalToGenerate = labelCount;
-    // 21 labels per sheet (3 cols x 7 rows) fits well on A4
     const itemsPerSheet = 21; 
     
     const pages = [];
@@ -246,7 +251,6 @@ export default function App() {
       
       for (let j = i; j < end; j++) {
         const currentBNo = startBNo + j;
-        // Correct calculation for Serial Range (B SL)
         const currentBundleQty = parseInt(specData.bQty) || 0;
         const startSL = 1 + (j * currentBundleQty);
         const endSL = (j + 1) * currentBundleQty;
@@ -261,8 +265,8 @@ export default function App() {
     }
 
     return pages.map((page, pageIdx) => (
-      <div key={pageIdx} className="page-container mb-24 last:mb-0 print:mb-0 print:break-after-page">
-        <div className="grid-container grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-4 print:gap-x-1 print:gap-y-4">
+      <div key={pageIdx} className="page-container page-preview print:mb-0 print:break-after-page">
+        <div className="grid-container grid-preview">
           {page.map((labelData, labelIdx) => (
             <ProductionCard key={labelIdx} data={labelData} styleConfig={styleConfig} />
           ))}
@@ -495,8 +499,8 @@ export default function App() {
 
       {/* Main Content: Preview */}
       <div className="flex-1 bg-zinc-100 p-8 lg:h-screen lg:overflow-y-auto preview-scroll relative lg:ml-[380px]">
-        <div className="max-w-[1000px] mx-auto bg-white p-6 shadow-2xl border border-zinc-200 min-h-full print-area">
-          <div className="flex items-center justify-between mb-8 pb-4 border-b border-zinc-100 no-print">
+        <div className="mx-auto min-h-full print-area">
+          <div className="flex items-center justify-between mb-8 pb-4 border-b border-zinc-200 no-print max-w-[210mm] mx-auto">
             <div className="flex items-center gap-2 text-zinc-400">
               <span className="text-[10px] font-bold uppercase tracking-widest italic">Live Preview</span>
             </div>

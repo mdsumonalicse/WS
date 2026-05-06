@@ -50,14 +50,11 @@ export const ProductionCard: React.FC<ProductionCardProps> = ({ data, styleConfi
 
   return (
     <div 
-      className={`relative inline-block border-2 border-black pt-2 px-2 pb-5 bg-white font-sans text-black leading-tight ${className}`} 
-      id="production-card" 
-      style={{ 
-        width: '65mm'
-      }}
+      className={`relative border-2 border-black bg-white font-sans text-black leading-tight overflow-hidden ${className}`} 
+      id="production-card"
     >
       <div 
-        className="grid grid-cols-[max-content_min-content_1fr_max-content_min-content_auto] gap-x-1 gap-y-1 items-center"
+        className="grid grid-cols-[max-content_min-content_1fr_max-content_min-content_auto] gap-x-1 gap-y-0.5 items-center"
         style={{ transform: `translateX(${xOffset}px)` }}
       >
         {/* Row 1 */}
